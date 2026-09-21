@@ -1,8 +1,6 @@
 package com.icici.entity;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.icici.security.JsonViews;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,22 +10,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+@Table(name="app_users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="customers")
-public class Customer {
+public class AppUser {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@JsonView(JsonViews.PublicView.class)
-	Integer id;
-	@JsonView(JsonViews.PublicView.class)
-	String name;
-	@JsonView(JsonViews.PublicView.class)
-	String email;
-	@JsonView(JsonViews.SensitiveView.class)
-	String mobile;
-	@JsonView(JsonViews.SensitiveView.class)
+	Long id;
+	@Column(unique = true, nullable = false)
 	String username;
+	@Column(nullable = false)
+	String password;
+	@Column(nullable = false)
+	String role;
 }
