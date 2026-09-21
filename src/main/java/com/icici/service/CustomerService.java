@@ -35,6 +35,23 @@ public class CustomerService {
 	}
 //	searchCustomersByName
 //	searchCustomerByEmail
-//	editCustomerDetails
-//	closeCustomer
+
+	public Customer editCustomerDetails(Customer customer) throws InvalidCustomerIdException {
+		Optional<Customer> optCustomer = customerRepo.findById(customer.getId());
+		if( optCustomer.isEmpty() ) {
+			// Create an exception and throw.
+			throw new InvalidCustomerIdException("Trying to update customer details which is not existing");
+		}
+		return customerRepo.save(customer);
+	}
+	
+	public Customer deleteCustomer(Integer id) throws InvalidCustomerIdException {
+		Optional<Customer> optCustomer = customerRepo.findById(id);
+		if( optCustomer.isEmpty() ) {
+			// Create an exception and throw.
+			throw new InvalidCustomerIdException("Customer ID : "+id+" is not valid");
+		}
+		customerRepo.deleteById(id);
+		return optCustomer.get();
+	}
 }
